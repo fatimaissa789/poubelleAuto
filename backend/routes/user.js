@@ -9,5 +9,7 @@ router.get('/getAllUser', userCtrl.getAllUser);
 
 router.get('/getOneThing/:id', userCtrl.getOneThing);
 
+router.patch('/updatePassword/:id', userCtrl.updatePassword);
+router.post('/logout/:id', userCtrl.logout);
 
 module.exports = router;
