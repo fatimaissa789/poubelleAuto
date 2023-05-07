@@ -140,15 +140,6 @@ exports.updatePassword = async (req, res, next) => {
 //deconnect
 exports.logout = (req, res, next) => {
   const uid = req.params.id
-  User.auth()
-  .revokeRefreshTokens(uid)
-  .then(() => {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      return res.send('Token revoké avec succès');
-    }).catch((error) => {
-      res.send(error)
-    });
-    
-  });
+  console.log(uid)
+ 
 };
