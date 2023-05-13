@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useNavigate  } from 'react-router-dom';
-import Cards from '../../components/card/Cards';
+import Cards from '../../components/Card/Cards';
 
-import { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 
 let userImg =
