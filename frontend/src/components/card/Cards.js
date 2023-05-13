@@ -2,7 +2,7 @@
 import React from 'react'
 import Tdy from '../TimeDateDay/Tdy';
 import vide from "../../assets/vide.jpg";
-import ferme from "../../assets/ferme.jpg";
+
 export default function Cards() {
   return (
     <div class="grid grid-cols-3 gap-4 overflow-auto  md:grid-cols-3  ">
