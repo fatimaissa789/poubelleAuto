@@ -1,7 +1,7 @@
 import  express  from "express";
 import cors from "cors";
 import morgan from "morgan";
-import connect from "./database/conn.js";
+import connect from './database/conn.js';
 import router from "./router/router.js";
 
 
@@ -16,7 +16,7 @@ app.use(morgan('poubelle'));
 app.disable('x-powered-by');//less hackers know about our stack
 
 
-const port = 8000;
+const port = 8080;
 
 
 //http get request 

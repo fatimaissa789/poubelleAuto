@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 // import des controllers
-import * as controller from '../controllers/appControllers'
+import * as controller from '../controllers/appControllers.js'
 
 
 
@@ -15,7 +15,7 @@ router.route('/login').post( controller.login)// connect app
 
 //GET METHOD
 
-router.route('/user/:username').get(conroller.getUser) //user with usernane
+router.route('/user/:username').get(controller.getUser) //user with usernane
 router.route('/generateOTP').get(controller.generateOTP) //generate random otp
 router.route('/verifyOTP').get(controller.verifyOTP) // verify generate otp
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variable 

@@ -1,4 +1,4 @@
-import UserModel from "../model/User.model";
+import UserModel from "../model/User.model.js";
 import bcrypt from "bcrypt"
 
 
@@ -20,56 +20,61 @@ import bcrypt from "bcrypt"
 
 export async function register (req,res){
    
-   try{
-       const {username,password, profile,email} = req.body;
-       //check existing username
-       const existingUsername = new Promise ((resolve, reject) => {
-        UserModel.findOne({username} ,function (err, user) {
-            if(err) reject(new Error(err))
-            if(user) reject({error:"unique username"})
-            resolve();
-        })
-       });
-       //check existing email
-       const existingEmail = new Promise ((resolve, reject) => {
-        UserModel.findOne({email} ,function (err, email) {
-            if(err) reject(new Error(err))
-            if(email) reject({error:"unique email "})
-            resolve();
-        })
-       });
-       Promise.all(existingEmail,existingUsername)
-        .then(() => {
-            if(password){
-                bcrypt.hash(password,10)
-                  .then(hashPassword => {
-                     const user = new UserModel({
-                        username,
-                      
-                        password: hashPassword,
-                        profile: profile || "", 
-                         email,
-                     });
-                     //return save result as a response
-                     user.save()
-                     .then(result => res.status(201).send({msg:" register user succes"}))
-                     .catch(error => res.status(500).send({error}))
-                  }).catch(error => {
-                    return res.status(500).send({
-                        error:"activer le mot de passe haché"
-                    })
-                  })
+    try {
+        const { username, password, profile, email } = req.body;        
 
-            }
+        // check the existing user
+        const existUsername = new Promise((resolve, reject) => {
+            UserModel.findOne({ username }, function(err, user){
+                if(err) reject(new Error(err))
+                if(user) reject({ error : "Please use unique username"});
 
-        }).catch(error => {
-            return res.status(500).send({
-                error:"activer le mot de passe haché"
+                resolve();
             })
-        })
-   }
-    catch{
-        return  res.status(500).send(error)
+        });
+
+        // check for existing email
+        const existEmail = new Promise((resolve, reject) => {
+            UserModel.findOne({ email }, function(err, email){
+                if(err) reject(new Error(err))
+                if(email) reject({ error : "Please use unique Email"});
+
+                resolve();
+            })
+        });
+
+
+        Promise.all([existUsername, existEmail])
+            .then(() => {
+                if(password){
+                    bcrypt.hash(password, 10)
+                        .then( hashedPassword => {
+                            
+                            const user = new UserModel({
+                                username,
+                                password: hashedPassword,
+                                profile: profile || '',
+                                email
+                            });
+
+                            // return save result as a response
+                            user.save()
+                                .then(result => res.status(201).send({ msg: "User Register Successfully"}))
+                                .catch(error => res.status(500).send({error}))
+
+                        }).catch(error => {
+                            return res.status(500).send({
+                                error : "Enable to hashed password"
+                            })
+                        })
+                }
+            }).catch(error => {
+                return res.status(500).send({ error })
+            })
+
+
+    } catch (error) {
+        return res.status(900).send(error);
     }
    
 }
